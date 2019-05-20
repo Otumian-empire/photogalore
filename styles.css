@@ -1,0 +1,134 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+body {
+    background-color: #c4c4c4;
+}
+
+.header {
+    width: 100%;
+    min-height: 90px;
+    text-align: center;
+}
+
+.header h1 {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    word-spacing: 0.6em;
+}
+
+.header p {
+    margin: 0 auto;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12px;
+    font-variant: small-caps;
+    font-style: oblique;
+    text-align: center;
+    color: #333333;
+}
+
+.button {
+    background-color: #141613;
+    color: #cccccc;
+    text-align: center;
+    padding: 5px 10px;
+    margin: 0 auto;
+    border-radius: 12px;
+    border: 1px solid #cccccc;
+}
+
+.button:hover {
+    background-color: #530b2f;
+}
+
+.file-upload-form {
+    background-color: #444;
+    color: #ffffff;
+    min-height: 100px;
+    margin: 5px auto;
+}
+
+.file-upload-form .form-container {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    padding: 10px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.file-upload-form .form-container form .label-input-field {
+    margin: 10px auto;
+    overflow: hidden;
+    /* border-radius: 12px; */
+}
+
+.file-upload-form .form-container form .file-label-description {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.file-upload-form .form-container form .file-label-description input[type='text'] {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    border: 1px solid #cccccc;
+    border-radius: 12px;
+    padding: 5px;
+    margin: 4px auto;
+}
+
+.file-upload-form .return-message {
+    padding: 5px;
+    text-align: center;
+    font-style: message-box;
+    font-family: fantasy;
+    font-size: 14px;
+}
+
+.home-page {
+    width: 80%;
+    margin: 0 auto;
+    display: grid;
+    grid-gap: 10px 10px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-auto-rows:300px;
+    grid-auto-flow: row;
+    grid-auto-columns: 100px;
+}
+
+.home-page .image-frame {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border: 1px solid #141613;
+    border-radius: 4px;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    line-height: 1.1em;
+}
+
+.home-page .image-frame .image {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 90%;
+    height: 200px;
+    margin: 0 auto;
+    
+}
+
+.home-page .image-frame .label {
+    font-family: cursive, Tahoma;
+    font-weight: bold;
+    text-transform: lowercase;
+}
+
+.home-page .image-frame .description {
+    font-family: monospace;
+    font-size: 12px;
+    text-transform: lowercase;
+}
