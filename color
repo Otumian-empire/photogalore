@@ -1,0 +1,23 @@
+**generals colors**
+body-bg: #fcfffc;
+
+form-bg: #494b48;
+form-color: #dbdedb;
+
+primary-text(h1): #fcfffc;
+secondary-text(p): #f9f9f9;
+
+button-bg: #6476f8;
+button-text: #f9f9f9;
+button-bg-hover: #1a1a1a;
+
+**modal colors**
+close-btn-color: #f9f9f9;
+close-btn-bg: #6476f8;
+close-btn-bg-hover: #c00707;
+
+modal-frame-bg: white;
+modal-frame-box-shadow-bg: rgba(0, 0, 0, 0.2) & rgba(0, 0, 0, 0.19);
+
+modal-content-bg: #f1f1f1;
+bg-modal-bg: rgba(27, 31, 34, 0.7);
