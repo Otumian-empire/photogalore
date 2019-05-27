@@ -26,7 +26,7 @@
         $fileError = $_FILES['user_image']['error'];
         $fileSize = $_FILES['user_image']['size'];
 
-        // validating the file size
+        // validating the file size, in bytes
         if ($fileSize >= 3000 && $fileSize <= 1000000 && $fileError === 0) {
             
             // validating the file extension type
@@ -35,20 +35,23 @@
             
             if (in_array($fileExtension, $allowedFileTypes)) {
 
-                // validating the file name count, should be less than 15 chars
+                // validating the file name count
+                // stripping tags and html chars
+                // i tried to use RegEx but couldn't
                 if (isset($_POST['file_label']) && isset($_POST['file_description'])) {
-                    $fileLabel = $_POST['file_label'];
-                    $fileDescription = $_POST['file_description'];
+                    
+                    $fileLabel = removeUnwantedChars($_POST['file_label']);
+                    $fileDescription = removeUnwantedChars($_POST['file_description']);
 
-                    if (strlen($fileLabel) > 0 && strlen($fileLabel) <= 15 &&
-                     strlen($fileDescription) > 0 && strlen($fileDescription) <= 255) {
+                    // file_label and file_description should consist of only letters and numbers
+                    if ((strlen($fileLabel) >= 4 && strlen($fileLabel) <= 50) && (strlen($fileDescription) >= 4 && strlen($fileDescription) <= 255)) {
                         
                         // setting up an interface between the database the image form upload
                         // rename file ($fileName = $fileLabel) , create image url = base folder + fileName(file label)
                         // put url, label and description into the data base
                         // then move the file to the base folder
 
-                        $imageUrl = "photos/" . str_replace(" ", "_", $fileLabel) . "." . $fileExtension;
+                        $imageUrl = "photos/" . str_replace(' ', '_', $fileLabel) . "." . $fileExtension;
 
                         // check if file already exists
                         if (file_exists($imageUrl)) {
@@ -73,12 +76,14 @@
                             }
                         }
                     } else {
-                        return_msg("enter a file name less than or equal to 15 chars<br>".
-                                "enter a file description less than or equal to 255 chars<br>".
-                                "but not empty..");
+                        // return_msg("enter a file name less than or equal to 15 chars<br>".
+                        //         "enter a file description less than or equal to 255 chars<br>".
+                        //         "but not empty and greater than 3 characters..");
+                        /*TODO: change this error message */
+                        return_msg("error with label and description: " . mysqli_error($conn));
                     }
                 } else {
-                    return_msg("File label and name needed");
+                    return_msg("File label and name needed, in that, exclude non-alphanumeric characters such as *, +, <, etc");
                 }
             } else {
                 return_msg("Only images of extension, png, jpg and jpeg are allowed..");
