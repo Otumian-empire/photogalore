@@ -1,9 +1,6 @@
 <?php
 
-/**
- * Constants for redirection in the function below
- *
- */
+// Constants for redirection in the function below
 define('DO_REDIRECT', true, false);
 define('DO_NOT_REDIRECT', false, false);
 

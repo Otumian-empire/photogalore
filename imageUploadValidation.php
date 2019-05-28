@@ -39,7 +39,7 @@
                 // stripping tags and html chars
                 // i tried to use RegEx but couldn't
                 if (isset($_POST['file_label']) && isset($_POST['file_description'])) {
-                    
+
                     $fileLabel = removeUnwantedChars($_POST['file_label']);
                     $fileDescription = removeUnwantedChars($_POST['file_description']);
 
@@ -62,25 +62,62 @@
                             return_msg("A file already exists with the same details...");
                         
                         } else {
-                            $insert_image_query = "INSERT INTO photos(`url`, `label`, `description`) VALUES('$imageUrl', '$fileLabel', '$fileDescription')";
+                            
+                            // Using prepared statements here instead of directly insert the data into the db
 
-                            if (mysqli_query($conn, $insert_image_query)) {
+                            // 0. initialize the stmt
+                            $stmt = mysqli_stmt_init($conn);
 
-                                if (move_uploaded_file($fileTmpName, $imageUrl)) {
-                                    return_msg("image has been moved successfully..");
+                            // 1. get/create the query/statement
+                            $query = "INSERT INTO photos(`url`, `label`, `description`) VALUES(?, ?, ?)";
+
+                            if ($stmt) {
+                                
+                                // return_msg("stmt init");
+                                // 2. prepare the statement
+                                $preparing = mysqli_stmt_prepare($stmt, $query);
+
+                                if ($preparing) {
+
+                                    // 3. bind variables to the prepared statement as parameters
+                                    $binding = mysqli_stmt_bind_param($stmt, 'sss', $imageUrl, $fileLabel, $fileDescription);
+    
+                                    if ($binding) {
+    
+                                        // 4. execute the prepared statement after the successful binding
+                                        $executing = mysqli_stmt_execute($stmt);
+    
+                                        if ($executing) {
+                                            
+                                            // 5. move the file to the imageUrl
+                                            if (move_uploaded_file($fileTmpName, $imageUrl)) {
+                                                
+                                                // 6. free the the store result memory
+                                                mysqli_stmt_free_result($stmt);
+
+                                                // the end of the stmt
+                                                return_msg("image has been moved successfully..");
+                                            } else {
+                                                return_msg("file upload unsuccessful..");
+                                            }    
+                                        } else {
+                                            return_msg("stmt err - execution stmt: " . mysqli_stmt_error($stmt));    
+                                        }
+                                    } else {
+                                        return_msg("stmt err - binding stmt: " . mysqli_stmt_error($stmt));    
+                                    }
                                 } else {
-                                    return_msg("file upload unsuccessful..<br>" . mysqli_error($conn));
+                                    return_msg("stmt err - preparing stmt: " . mysqli_stmt_error($stmt));
                                 }
                             } else {
-                                return_msg("database error: " . mysqli_error($conn));
+                                return_msg("stmt err - initializing stmt: " . mysqli_stmt_error($stmt));
                             }
+
                         }
                     } else {
-                        // return_msg("enter a file name less than or equal to 15 chars<br>".
-                        //         "enter a file description less than or equal to 255 chars<br>".
-                        //         "but not empty and greater than 3 characters..");
-                        /*TODO: change this error message */
-                        return_msg("error with label and description: " . mysqli_error($conn));
+                        return_msg("enter a file name less than or equal to 15 chars<br>".
+                                "enter a file description less than or equal to 255 chars<br>".
+                                "but not empty and greater than 3 characters..");
                     }
                 } else {
                     return_msg("File label and name needed, in that, exclude non-alphanumeric characters such as *, +, <, etc");

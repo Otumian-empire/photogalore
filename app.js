@@ -99,6 +99,9 @@ function unsetDisplay(id) {
         document.getElementsByClassName('bg-modal')[0].style.display = 'none'
         document.getElementsByClassName('top')[0].style.display = 'block'
 
+        // we noticed that the url, label and description is set when we close the modal
+        // pass url = label = description = "" as arguments to modalFrame
+        modalFrame('', '', '')
         // moving to the part where i image was when clicked
         window.location.hash = id;
     })
