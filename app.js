@@ -1,7 +1,7 @@
 /**
  * this function is called when an image is clicked on the index page.
  * the image url (path), label and description is taken and passed to another function as a arguments
- * enlargeImage calls modalFrame function
+ * enlargeImage calls setModalFrame function
  * enlargeImage calls setDisplay function
  * enlargeImage calls changeTextOnCloseBtn function
  * enlargeImage calls unsetDisplay function
@@ -35,8 +35,8 @@ function enlargeImage(el) {
     // console.log("label: " + label)
     // console.log("description: " + description)
 
-    // pass url, label and description as arguments to modalFrame
-    modalFrame(url, label, description)
+    // pass url, label and description as arguments to setModalFrame
+    setModalFrame(url, label, description)
 
     // call setDisplay
     setDisplay()
@@ -62,7 +62,7 @@ function enlargeImage(el) {
  * @param {*} label 
  * @param {*} description 
  */
-function modalFrame(url, label, description) {
+function setModalFrame(url, label, description) {
     /* 
         <div class="modal-frame">
             <img src="" alt="" id="modal-url">
@@ -100,8 +100,8 @@ function unsetDisplay(id) {
         document.getElementsByClassName('top')[0].style.display = 'block'
 
         // we noticed that the url, label and description is set when we close the modal
-        // pass url = label = description = "" as arguments to modalFrame
-        modalFrame('', '', '')
+        // pass url = label = description = "" as arguments to setModalFrame
+        setModalFrame('', '', '')
         // moving to the part where i image was when clicked
         window.location.hash = id;
     })
